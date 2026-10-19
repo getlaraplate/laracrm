@@ -3,7 +3,7 @@
     "laraplate_owned": true,
     "alias": "crm",
     "description": "CRM module: accounts, contacts, leads and opportunities. Upstream of ERP.",
-    "color": "blue",
+    "color": "bright-green",
     "keywords": [
         "crm",
         "laraplate"
