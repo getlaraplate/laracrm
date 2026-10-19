@@ -1,0 +1,66 @@
+{
+  "name": "swolley/laraplate-crm",
+  "vendor": "swolley",
+  "description": "CRM Module contains all the necessary functionality for managing accounts, contacts, leads and opportunities.",
+  "version": "v0.1.0",
+  "keywords": [
+    "laravel",
+    "laraplate",
+    "crm"
+  ],
+  "authors": [
+    {
+      "name": "Swolley",
+      "email": "myentity@inwind.it"
+    }
+  ],
+  "license": "AGPL-3.0-or-later",
+  "type": "laravel-module",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/swolley/license-compliance-checker.git",
+      "no-api": true
+    }
+  ],
+  "require": {
+    "php": ">=8.5",
+    "laravel/framework": "^12.0"
+  },
+  "scripts": {
+    "update:requirements": [
+      "composer bump",
+      "npx npm-check-updates -u"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [],
+      "aliases": {}
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\CRM\\": "app/",
+      "Modules\\CRM\\Database\\Factories\\": "database/factories/",
+      "Modules\\CRM\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Modules\\CRM\\Tests\\Unit\\": "tests/Unit",
+      "Modules\\CRM\\Tests\\Feature\\": "tests/Feature",
+      "Modules\\CRM\\Tests\\Integration\\": "tests/Integration",
+      "Modules\\CRM\\Tests\\Support\\": "tests/Support/"
+    },
+    "classmap": [
+      "tests/TestCase.php"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}

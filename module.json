@@ -1,0 +1,20 @@
+{
+    "name": "CRM",
+    "laraplate_owned": true,
+    "alias": "crm",
+    "description": "CRM module: accounts, contacts, leads and opportunities. Upstream of ERP.",
+    "color": "blue",
+    "keywords": [
+        "crm",
+        "laraplate"
+    ],
+    "priority": 5,
+    "providers": [
+        "Modules\\CRM\\Providers\\CRMServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [
+        "Core"
+    ]
+}
