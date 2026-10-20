@@ -2,7 +2,7 @@
     "name": "CRM",
     "laraplate_owned": true,
     "alias": "crm",
-    "description": "CRM module: accounts, contacts, leads and opportunities. Upstream of ERP.",
+    "description": "Laraplate CRM module: counterparties, contacts, leads and opportunities.",
     "color": "bright-green",
     "keywords": [
         "crm",
