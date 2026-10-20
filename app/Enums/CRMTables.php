@@ -13,4 +13,6 @@ enum CRMTables: string
     case Counterparties = 'crm_counterparties';
     case Contacts = 'crm_contacts';
     case Contactables = 'crm_contactables';
+    case Leads = 'crm_leads';
+    case Opportunities = 'crm_opportunities';
 }

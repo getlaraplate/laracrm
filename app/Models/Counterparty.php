@@ -95,6 +95,22 @@ final class Counterparty extends Model
     }
 
     /**
+     * @return HasMany<Lead, $this>
+     */
+    public function leads(): HasMany
+    {
+        return $this->hasMany(Lead::class);
+    }
+
+    /**
+     * @return HasMany<Opportunity, $this>
+     */
+    public function opportunities(): HasMany
+    {
+        return $this->hasMany(Opportunity::class);
+    }
+
+    /**
      * @return BelongsToMany<Contact, $this>
      */
     public function contacts(): BelongsToMany

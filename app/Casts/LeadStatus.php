@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\CRM\Casts;
+
+enum LeadStatus: string
+{
+    case New = 'new';
+    case Contacted = 'contacted';
+    case Qualified = 'qualified';
+    case Disqualified = 'disqualified';
+    case Converted = 'converted';
+
+    /**
+     * @return array<int, string>
+     */
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
+    public static function validationRule(): string
+    {
+        return 'in:' . implode(',', self::values());
+    }
+}

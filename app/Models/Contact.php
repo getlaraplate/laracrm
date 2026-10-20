@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Core\Models\User;
 use Modules\Core\Overrides\Model;
 use Modules\CRM\Database\Factories\ContactFactory;
@@ -51,6 +52,14 @@ final class Contact extends Model
         return $this->belongsToMany(Counterparty::class, CRMTables::Contactables->value, 'contact_id', 'counterparty_id')
             ->using(Contactable::class)
             ->withTimestamps();
+    }
+
+    /**
+     * @return HasMany<Lead, $this>
+     */
+    public function leads(): HasMany
+    {
+        return $this->hasMany(Lead::class);
     }
 
     /**
