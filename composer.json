@@ -1,6 +1,6 @@
 {
-  "name": "swolley/laraplate-crm",
-  "vendor": "swolley",
+  "name": "getlaraplate/laraplate-crm",
+  "vendor": "getlaraplate",
   "description": "CRM Module contains all the necessary functionality for managing accounts, contacts, leads and opportunities.",
   "version": "v0.1.0",
   "keywords": [
