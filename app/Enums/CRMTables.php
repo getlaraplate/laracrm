@@ -11,4 +11,6 @@ enum CRMTables: string
     use HasModuleTablesUtils;
 
     case Counterparties = 'crm_counterparties';
+    case Contacts = 'crm_contacts';
+    case Contactables = 'crm_contactables';
 }

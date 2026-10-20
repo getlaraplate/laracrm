@@ -6,12 +6,14 @@ namespace Modules\CRM\Models;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\ValidationException;
 use Modules\Core\Overrides\Model;
 use Modules\CRM\Casts\CounterpartyKind;
 use Modules\CRM\Database\Factories\CounterpartyFactory;
 use Modules\CRM\Enums\CRMTables;
+use Modules\CRM\Models\Pivot\Contactable;
 use Override;
 
 /**
@@ -90,6 +92,16 @@ final class Counterparty extends Model
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_counterparty_id');
+    }
+
+    /**
+     * @return BelongsToMany<Contact, $this>
+     */
+    public function contacts(): BelongsToMany
+    {
+        return $this->belongsToMany(Contact::class, CRMTables::Contactables->value, 'counterparty_id', 'contact_id')
+            ->using(Contactable::class)
+            ->withTimestamps();
     }
 
     /**
