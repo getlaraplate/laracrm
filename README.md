@@ -27,7 +27,7 @@ Install **Core** first, then this module, then the ERP. Enable it with `php arti
 
 ## Current Status
 
-Parity with the former ERP M3.1 CRM, plus counterparties and counterparty bank accounts. Quotations, a product catalogue, campaigns, interaction history and ticketing are not built yet; see `docs/superpowers/specs/2026-10-15-crm-module-design.md` in the `laraplate` repository.
+Parity with the former ERP M3.1 CRM, plus counterparties and counterparty bank accounts. Quotations stay in the ERP (a CRM `Quote` with its product catalogue is a future step). Campaigns, interaction history and ticketing are not built yet; see `docs/superpowers/specs/2026-10-15-crm-module-design.md` in the `laraplate` repository.
 
 ## License
 

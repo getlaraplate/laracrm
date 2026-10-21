@@ -39,4 +39,4 @@ Commercial relationship module of Laraplate: counterparties, contacts, leads and
 
 ## Not in this module yet
 
-Quotation and product catalogue for a CRM used without the ERP, lead versus opportunity merge, contact role per counterparty, first and last name for persons, group totals over the hierarchy, intercompany sales, printing through Core templates.
+Quote and product catalogue for a CRM used without the ERP (the `Quotation` stays in the ERP, decision D14), lead versus opportunity merge, contact role per counterparty, first and last name for persons, group totals over the hierarchy, intercompany sales, printing through Core templates.
