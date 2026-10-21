@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+    'actions' => [
+        'convert' => 'Convertir en oportunidad',
+    ],
     'entities' => [
         'contacts' => [
             'plural' => 'Contactos',
@@ -59,6 +62,9 @@ return [
     'help' => [
         'personNameDerived' => 'Se deriva como "apellido nombre" cuando se rellena alguna de las partes.',
         'stageTaxonomiesRequired' => 'Las fases del embudo requieren taxonomías: ejecuta CRMDatabaseSeeder y luego DevCRMDatabaseSeeder.',
+    ],
+    'messages' => [
+        'leadConverted' => 'Lead convertido en oportunidad.',
     ],
     'reports' => [
         'count' => 'Cantidad',

@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+    'actions' => [
+        'convert' => 'Convert to opportunity',
+    ],
     'entities' => [
         'contacts' => [
             'plural' => 'Contacts',
@@ -59,6 +62,9 @@ return [
     'help' => [
         'personNameDerived' => 'Derived as "last first" when either part is filled.',
         'stageTaxonomiesRequired' => 'Pipeline stages require taxonomies: run CRMDatabaseSeeder then DevCRMDatabaseSeeder so stages exist.',
+    ],
+    'messages' => [
+        'leadConverted' => 'Lead converted to an opportunity.',
     ],
     'reports' => [
         'count' => 'Count',

@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+    'actions' => [
+        'convert' => 'In Opportunity umwandeln',
+    ],
     'entities' => [
         'contacts' => [
             'plural' => 'Kontakte',
@@ -59,6 +62,9 @@ return [
     'help' => [
         'personNameDerived' => 'Wird aus Nachname und Vorname gebildet, wenn einer davon ausgefüllt ist.',
         'stageTaxonomiesRequired' => 'Pipeline-Phasen benötigen Taxonomien: CRMDatabaseSeeder und dann DevCRMDatabaseSeeder ausführen.',
+    ],
+    'messages' => [
+        'leadConverted' => 'Lead in eine Opportunity umgewandelt.',
     ],
     'reports' => [
         'count' => 'Anzahl',

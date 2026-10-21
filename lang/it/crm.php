@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+    'actions' => [
+        'convert' => 'Converti in opportunità',
+    ],
     'entities' => [
         'contacts' => [
             'plural' => 'Contatti',
@@ -59,6 +62,9 @@ return [
     'help' => [
         'personNameDerived' => 'Derivato come "cognome nome" quando uno dei due è compilato.',
         'stageTaxonomiesRequired' => 'Le fasi della pipeline richiedono le tassonomie: esegui CRMDatabaseSeeder e poi DevCRMDatabaseSeeder.',
+    ],
+    'messages' => [
+        'leadConverted' => 'Lead convertito in opportunità.',
     ],
     'reports' => [
         'count' => 'Numero',

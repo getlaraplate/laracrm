@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+    'actions' => [
+        'convert' => 'Pretvori v priložnost',
+    ],
     'entities' => [
         'contacts' => [
             'plural' => 'Kontakti',
@@ -59,6 +62,9 @@ return [
     'help' => [
         'personNameDerived' => 'Izpeljano kot "priimek ime", ko je izpolnjeno eno od polj.',
         'stageTaxonomiesRequired' => 'Faze prodajnega lijaka zahtevajo taksonomije: zaženite CRMDatabaseSeeder in nato DevCRMDatabaseSeeder.',
+    ],
+    'messages' => [
+        'leadConverted' => 'Potencialna stranka je pretvorjena v priložnost.',
     ],
     'reports' => [
         'count' => 'Število',

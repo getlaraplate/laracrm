@@ -15,6 +15,7 @@
 The CRM module owns the commercial relationship with a counterparty: who it is, who works there, and the sales pipeline. It is upstream of the ERP module: the ERP depends on the CRM, never the reverse, and the CRM imports no ERP class and reads no ERP table.
 
 - **Counterparty**: a company or a natural person (a person may carry first and last name, from which `name` is derived), shared by every company of the installation. Holds the legal identity (name, VAT number, tax id, address, e-invoice routing), an optional parent for groups, the bank accounts, and the aggregate customer/supplier flags written by the ERP.
+- **LeadConversionService**: turns a qualified lead into an open opportunity and marks the lead converted, in one transaction (the leads list has a "Convert" action).
 - **Contact**: a person at one or more counterparties, optionally a Laraplate user. The link carries the contact's role at that counterparty (a `ContactRole` taxonomy node, configured without code) and whether it is the main contact (one per counterparty).
 - **Lead** and **Opportunity**: the pipeline, with `OpportunityStage` as a Core taxonomy.
 - **OpportunityLifecycleService**: closes an opportunity as won; the ERP calls it when a quotation is accepted.

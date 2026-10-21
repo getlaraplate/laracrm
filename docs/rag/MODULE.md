@@ -23,6 +23,7 @@ Commercial relationship module of Laraplate: counterparties, contacts, leads and
 ## Integration with the ERP
 
 - `Party` uses `ProxiesCounterparty`: `$party->name`, `$party->vat_number` and the other identity attributes read and write the counterparty; saving without a `counterparty_id` attaches by fiscal identity or creates one, and never overwrites the stored attributes of an existing counterparty.
+- `LeadConversionService::convert()`: lead to open opportunity in one transaction (decision D30); the leads list exposes it as the "Convert" action.
 - `PartyObserver` recomputes the counterparty aggregate flags when a party is created, deleted, restored, or when its flags or its counterparty change (the counterparty it leaves is refreshed too). `GuardCounterpartyDeletion` refuses to delete a counterparty with a live party; `GuardOrganisationalCounterparty` refuses a group parent without VAT number and tax id that already has a party (the party side refuses to attach to such a counterparty when it has children).
 - `QuotationObserver`: an accepted quotation sets `is_customer` on its party and calls `OpportunityLifecycleService::markWon()`. A quotation no longer requires a customer party, and its opportunity must belong to the same counterparty as the quotation party.
 - `PartyBankAccount` (ERP) points to a `CounterpartyBankAccount` and proxies its data through `ProxiesCounterpartyBankAccount`.
@@ -39,4 +40,4 @@ Commercial relationship module of Laraplate: counterparties, contacts, leads and
 
 ## Not in this module yet
 
-Quote and product catalogue for a CRM used without the ERP (the `Quotation` stays in the ERP, decision D14), lead versus opportunity merge, group totals over the hierarchy, automatic twin documents and consolidation eliminations for intercompany sales (a party of another company of the group is recognised, see decision D29), printing through Core templates.
+Quote and product catalogue for a CRM used without the ERP (the `Quotation` stays in the ERP, decision D14), group totals over the hierarchy, automatic twin documents and consolidation eliminations for intercompany sales (a party of another company of the group is recognised, see decision D29), printing through Core templates.
