@@ -37,3 +37,23 @@ it('creates the counterparty of a new lead when nothing matches', function (): v
     expect(Counterparty::query()->where('vat_number', 'IT03333333333')->count())->toBe(1)
         ->and(Lead::query()->firstOrFail()->counterparty->name)->toBe('Fresh Prospect S.r.l.');
 });
+
+it('edits a lead whose counterparty is in the trash', function (): void {
+    HttpContext::panelActorWithoutApproval(new Lead, ['select', 'insert', 'update', 'delete']);
+    $counterparty = Counterparty::factory()->create(['name' => 'Gone S.r.l.']);
+    $lead = Lead::query()->create(['title' => 'Old title', 'status' => 'new', 'counterparty_id' => $counterparty->getKey()]);
+    $counterparty->delete();
+
+    $page = Livewire::test(Modules\CRM\Filament\Resources\Leads\Pages\EditLead::class, ['record' => $lead->getKey()]);
+
+    expect($page->instance()->getSchema('form')->getComponent('counterparty_id')->getOptionLabel())->toBe('Gone S.r.l.');
+
+    $page
+        ->assertFormSet(['counterparty_id' => $counterparty->getKey()])
+        ->fillForm(['title' => 'New title'])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    expect($lead->fresh()->title)->toBe('New title')
+        ->and($lead->fresh()->counterparty_id)->toBe($counterparty->getKey());
+});
