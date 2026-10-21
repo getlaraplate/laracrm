@@ -26,6 +26,7 @@ Commercial relationship module of Laraplate: counterparties, contacts, leads and
 - `PartyObserver` recomputes the counterparty aggregate flags when a party is created, deleted, restored, or when its flags or its counterparty change (the counterparty it leaves is refreshed too). `GuardCounterpartyDeletion` refuses to delete a counterparty with a live party; `GuardOrganisationalCounterparty` refuses a group parent without VAT number and tax id that already has a party (the party side refuses to attach to such a counterparty when it has children).
 - `QuotationObserver`: an accepted quotation sets `is_customer` on its party and calls `OpportunityLifecycleService::markWon()`. A quotation no longer requires a customer party, and its opportunity must belong to the same counterparty as the quotation party.
 - `PartyBankAccount` (ERP) points to a `CounterpartyBankAccount` and proxies its data through `ProxiesCounterpartyBankAccount`.
+- `Party` implements Core `IMountsRelatedAttributes`: the CRUD API filters, sorts and selects the identity attributes by their plain name (`name`, `vat_number`); Core turns them into the `counterparty` relation column.
 - The ERP sales pipeline report and page read `Opportunity` and stay in the ERP (the CSV exporter is ERP-only).
 
 ## Filament

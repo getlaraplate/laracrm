@@ -7,6 +7,4 @@ namespace Modules\CRM\Tests;
 /**
  * CRM tests use the full Laraplate application bootstrap (same as production).
  */
-abstract class TestCase extends \Tests\TestCase
-{
-}
+abstract class TestCase extends \Tests\TestCase {}

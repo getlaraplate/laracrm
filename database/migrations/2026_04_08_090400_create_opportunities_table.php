@@ -54,8 +54,6 @@ return new class extends Migration
                 hasCreateUpdate: true,
                 hasSoftDelete: true,
             );
-
-            $table->index(['company_id', 'counterparty_id'], "{$opportunities_table}_company_counterparty_idx");
         });
     }
 
