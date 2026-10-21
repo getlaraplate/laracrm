@@ -95,6 +95,14 @@ final class Counterparty extends Model
     }
 
     /**
+     * @return HasMany<CounterpartyBankAccount, $this>
+     */
+    public function bank_accounts(): HasMany
+    {
+        return $this->hasMany(CounterpartyBankAccount::class);
+    }
+
+    /**
      * @return HasMany<Lead, $this>
      */
     public function leads(): HasMany
