@@ -22,6 +22,10 @@ return [
         ],
     ],
     'fields' => [
+        'new_counterparty_name' => 'Nombre de la nueva empresa',
+        'new_counterparty_fiscal_country' => 'País de la nueva empresa',
+        'new_counterparty_vat_number' => 'NIF/IVA de la nueva empresa',
+        'new_counterparty_tax_id' => 'Identificación fiscal de la nueva empresa',
         'notes' => 'Notas',
         'owner_user_id' => 'Responsable',
         'stage' => 'Etapa',

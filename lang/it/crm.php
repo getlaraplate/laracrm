@@ -22,6 +22,10 @@ return [
         ],
     ],
     'fields' => [
+        'new_counterparty_name' => 'Nome nuova azienda',
+        'new_counterparty_fiscal_country' => 'Paese nuova azienda',
+        'new_counterparty_vat_number' => 'Partita IVA nuova azienda',
+        'new_counterparty_tax_id' => 'Codice fiscale nuova azienda',
         'notes' => 'Note',
         'owner_user_id' => 'Responsabile',
         'stage' => 'Fase',

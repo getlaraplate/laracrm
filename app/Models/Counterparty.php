@@ -55,12 +55,13 @@ final class Counterparty extends Model
      */
     public static function findByFiscalIdentity(?string $fiscalCountry, ?string $vatNumber, ?string $taxId): ?self
     {
-        $vatNumber = self::blankToNull($vatNumber);
-        $taxId = self::blankToNull($taxId);
-        $fiscalCountry = self::blankToNull($fiscalCountry);
+        $vatNumber = self::normalizeIdentifier($vatNumber);
+        $taxId = self::normalizeIdentifier($taxId);
+        $fiscalCountry = self::normalizeIdentifier($fiscalCountry);
 
         if ($vatNumber !== null) {
             $match = self::query()
+                ->withTrashed()
                 ->where('vat_number', $vatNumber)
                 ->when($fiscalCountry !== null, static fn ($query) => $query->where('fiscal_country', $fiscalCountry))
                 ->orderBy('id')
@@ -72,10 +73,52 @@ final class Counterparty extends Model
         }
 
         if ($taxId !== null) {
-            return self::query()->where('tax_id', $taxId)->orderBy('id')->first();
+            return self::query()->withTrashed()->where('tax_id', $taxId)->orderBy('id')->first();
         }
 
         return null;
+    }
+
+    /**
+     * The counterparty a new commercial approach is about: the one with the same fiscal identity, else the one
+     * with the same name, else a new one. A trashed match is restored. Stored attributes of a match are never
+     * overwritten.
+     *
+     * @param  array<string, mixed>  $attributes  At least `name`, optionally `fiscal_country`, `vat_number`, `tax_id`.
+     */
+    public static function attachOrCreate(array $attributes): self
+    {
+        $match = self::findByFiscalIdentity(
+            isset($attributes['fiscal_country']) ? (string) $attributes['fiscal_country'] : null,
+            isset($attributes['vat_number']) ? (string) $attributes['vat_number'] : null,
+            isset($attributes['tax_id']) ? (string) $attributes['tax_id'] : null,
+        );
+
+        $name = self::blankToNull(isset($attributes['name']) ? (string) $attributes['name'] : null);
+
+        if (! $match instanceof self && $name !== null) {
+            $match = self::query()->withTrashed()->whereRaw('LOWER(name) = ?', [mb_strtolower($name)])->orderBy('id')->first();
+        }
+
+        if ($match instanceof self) {
+            if ($match->trashed()) {
+                $match->restore();
+            }
+
+            return $match;
+        }
+
+        return self::query()->create($attributes);
+    }
+
+    /**
+     * Fiscal identifiers are matched case-insensitively and without spaces, so `it 0123` and `IT0123` are one subject.
+     */
+    public static function normalizeIdentifier(?string $value): ?string
+    {
+        $value = $value === null ? null : mb_strtoupper((string) preg_replace('/\s+/u', '', $value));
+
+        return $value === null || $value === '' ? null : $value;
     }
 
     /**
@@ -173,6 +216,12 @@ final class Counterparty extends Model
     protected static function booted(): void
     {
         self::saving(static function (self $counterparty): void {
+            foreach (['vat_number', 'tax_id', 'fiscal_country'] as $attribute) {
+                if ($counterparty->isDirty($attribute)) {
+                    $counterparty->{$attribute} = self::normalizeIdentifier($counterparty->{$attribute});
+                }
+            }
+
             if ($counterparty->parent_counterparty_id === null || ! $counterparty->isDirty('parent_counterparty_id')) {
                 return;
             }

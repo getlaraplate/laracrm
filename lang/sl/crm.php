@@ -22,6 +22,10 @@ return [
         ],
     ],
     'fields' => [
+        'new_counterparty_name' => 'Ime novega podjetja',
+        'new_counterparty_fiscal_country' => 'Država novega podjetja',
+        'new_counterparty_vat_number' => 'DDV številka novega podjetja',
+        'new_counterparty_tax_id' => 'Davčna številka novega podjetja',
         'notes' => 'Opombe',
         'owner_user_id' => 'Odgovorna oseba',
         'stage' => 'Faza',

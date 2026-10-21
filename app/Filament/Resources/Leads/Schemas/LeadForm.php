@@ -31,6 +31,19 @@ final class LeadForm
                     ->searchable()
                     ->preload()
                     ->nullable(),
+                TextInput::make('new_counterparty_name')
+                    ->maxLength(255)
+                    ->dehydrated(true)
+                    ->hiddenOn('edit'),
+                TextInput::make('new_counterparty_fiscal_country')
+                    ->length(2)
+                    ->hiddenOn('edit'),
+                TextInput::make('new_counterparty_vat_number')
+                    ->maxLength(32)
+                    ->hiddenOn('edit'),
+                TextInput::make('new_counterparty_tax_id')
+                    ->maxLength(32)
+                    ->hiddenOn('edit'),
                 Select::make('contact_id')
                     ->relationship('contact', 'name')
                     ->searchable()

@@ -45,3 +45,20 @@ it('refuses to be its own ancestor', function (): void {
 
     expect(fn () => $child->save())->toThrow(ValidationException::class);
 });
+
+it('normalises fiscal identifiers so that case and spaces do not create a second subject', function (): void {
+    $stored = Counterparty::query()->create(['name' => 'Acme', 'fiscal_country' => 'it', 'vat_number' => ' it 0123 4567 890 ', 'tax_id' => 'rssmra80a01h501u']);
+
+    expect($stored->fresh()->vat_number)->toBe('IT01234567890')
+        ->and($stored->fresh()->tax_id)->toBe('RSSMRA80A01H501U')
+        ->and($stored->fresh()->fiscal_country)->toBe('IT')
+        ->and(Counterparty::findByFiscalIdentity('it', 'it 01234567890', null)?->is($stored))->toBeTrue()
+        ->and(Counterparty::findByFiscalIdentity(null, null, 'rssmra80a01h501u')?->is($stored))->toBeTrue();
+});
+
+it('finds a soft deleted counterparty by its fiscal identity', function (): void {
+    $trashed = Counterparty::factory()->create(['fiscal_country' => 'IT', 'vat_number' => 'IT07777777777']);
+    $trashed->delete();
+
+    expect(Counterparty::findByFiscalIdentity('IT', 'IT07777777777', null)?->is($trashed))->toBeTrue();
+});

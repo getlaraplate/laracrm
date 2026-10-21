@@ -22,6 +22,10 @@ return [
         ],
     ],
     'fields' => [
+        'new_counterparty_name' => 'New company name',
+        'new_counterparty_fiscal_country' => 'New company country',
+        'new_counterparty_vat_number' => 'New company VAT number',
+        'new_counterparty_tax_id' => 'New company tax id',
         'notes' => 'Notes',
         'owner_user_id' => 'Owner',
         'stage' => 'Stage',
