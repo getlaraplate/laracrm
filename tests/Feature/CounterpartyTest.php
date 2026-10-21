@@ -62,3 +62,43 @@ it('finds a soft deleted counterparty by its fiscal identity', function (): void
 
     expect(Counterparty::findByFiscalIdentity('IT', 'IT07777777777', null)?->is($trashed))->toBeTrue();
 });
+
+it('derives the name of a person from the last and first name', function (): void {
+    $person = Counterparty::factory()->person()->create(['first_name' => 'Mario', 'last_name' => 'Rossi']);
+
+    expect($person->fresh()->name)->toBe('Rossi Mario');
+
+    $person->update(['first_name' => 'Luigi']);
+
+    expect($person->fresh()->name)->toBe('Rossi Luigi');
+});
+
+it('keeps the name of a person created with the name only', function (): void {
+    $person = Counterparty::factory()->person()->create(['name' => 'Mario Rossi']);
+
+    expect($person->fresh()->name)->toBe('Mario Rossi')
+        ->and($person->fresh()->first_name)->toBeNull();
+});
+
+it('derives the name from a single part', function (): void {
+    $person = Counterparty::factory()->person()->create(['last_name' => 'Rossi']);
+
+    expect($person->fresh()->name)->toBe('Rossi');
+});
+
+it('refuses first and last name on a company', function (): void {
+    expect(fn () => Counterparty::factory()->company()->create(['first_name' => 'Mario']))
+        ->toThrow(ValidationException::class);
+
+    $company = Counterparty::factory()->company()->create();
+    $company->last_name = 'Rossi';
+
+    expect(fn () => $company->save())->toThrow(ValidationException::class);
+});
+
+it('validates the length of the name parts', function (): void {
+    $rules = (new Counterparty)->getRules();
+
+    expect($rules['create'])->toHaveKeys(['first_name', 'last_name'])
+        ->and($rules['update'])->toHaveKeys(['first_name', 'last_name']);
+});

@@ -35,6 +35,8 @@ final class Counterparty extends Model
     #[Override]
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
         'kind',
         'tax_id',
         'vat_number',
@@ -168,6 +170,7 @@ final class Counterparty extends Model
     {
         return $this->belongsToMany(Contact::class, CRMTables::Contactables->value, 'counterparty_id', 'contact_id')
             ->using(Contactable::class)
+            ->withPivot(['role_taxonomy_id', 'is_primary'])
             ->withTimestamps();
     }
 
@@ -191,6 +194,8 @@ final class Counterparty extends Model
             'einvoice_pec_email' => ['nullable', 'email', 'max:255'],
             'parent_counterparty_id' => ['nullable', 'integer', 'exists:' . CRMTables::Counterparties->value . ',id'],
         ];
+        $identity['first_name'] = ['nullable', 'string', 'max:128'];
+        $identity['last_name'] = ['nullable', 'string', 'max:128'];
         $rules['create'] = array_merge($rules['create'], $identity, [
             'name' => ['required', 'string', 'max:255'],
             'kind' => ['sometimes', 'string', CounterpartyKind::validationRule()],
@@ -216,6 +221,8 @@ final class Counterparty extends Model
     protected static function booted(): void
     {
         self::saving(static function (self $counterparty): void {
+            $counterparty->syncPersonName();
+
             foreach (['vat_number', 'tax_id', 'fiscal_country'] as $attribute) {
                 if ($counterparty->isDirty($attribute)) {
                     $counterparty->{$attribute} = self::normalizeIdentifier($counterparty->{$attribute});
@@ -248,6 +255,31 @@ final class Counterparty extends Model
         $value = $value === null ? null : mb_trim($value);
 
         return $value === null || $value === '' ? null : $value;
+    }
+
+    /**
+     * Name parts belong to natural persons only. When a person has any, `name` is derived as "last first", so every
+     * reader of `name` (search, ordering, documents) keeps working; a person with only `name` is left alone.
+     */
+    private function syncPersonName(): void
+    {
+        foreach (['first_name', 'last_name'] as $part) {
+            if ($this->isDirty($part)) {
+                $this->{$part} = self::blankToNull($this->{$part});
+            }
+        }
+
+        if ($this->first_name === null && $this->last_name === null) {
+            return;
+        }
+
+        if (($this->kind ?? CounterpartyKind::Company) !== CounterpartyKind::Person) {
+            throw ValidationException::withMessages([
+                $this->first_name !== null ? 'first_name' : 'last_name' => ['First and last name are only for natural persons.'],
+            ]);
+        }
+
+        $this->name = mb_trim(($this->last_name ?? '') . ' ' . ($this->first_name ?? ''));
     }
 
     private function wouldBecomeItsOwnAncestor(): bool

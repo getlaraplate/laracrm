@@ -51,6 +51,7 @@ final class Contact extends Model
     {
         return $this->belongsToMany(Counterparty::class, CRMTables::Contactables->value, 'contact_id', 'counterparty_id')
             ->using(Contactable::class)
+            ->withPivot(['role_taxonomy_id', 'is_primary'])
             ->withTimestamps();
     }
 

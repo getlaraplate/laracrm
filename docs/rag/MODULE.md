@@ -13,9 +13,9 @@ Commercial relationship module of Laraplate: counterparties, contacts, leads and
 
 | Model | Table | Notes |
 |-------|-------|-------|
-| `Counterparty` | `crm_counterparties` | Legal identity, `kind`, optional parent, aggregate flags. `Counterparty::findByFiscalIdentity($country, $vat, $taxId)` matches country plus VAT number, then tax id; blank identifiers never match. A counterparty cannot be its own ancestor. |
+| `Counterparty` | `crm_counterparties` | Legal identity, `kind`, optional `first_name` / `last_name` for persons (`name` is derived as "last first"; refused on a company), optional parent, aggregate flags. `Counterparty::findByFiscalIdentity($country, $vat, $taxId)` matches country plus VAT number, then tax id; blank identifiers never match. A counterparty cannot be its own ancestor. |
 | `CounterpartyBankAccount` | `crm_counterparty_bank_accounts` | Unique per (`counterparty_id`, `iban`); IBAN, BIC and currency normalised on save. |
-| `Contact`, `Pivot\Contactable` | `crm_contacts`, `crm_contactables` | Many-to-many with counterparties, no pivot attributes. |
+| `Contact`, `Pivot\Contactable` | `crm_contacts`, `crm_contactables` | Many-to-many with counterparties. The link has `role_taxonomy_id` (a `ContactRole` node) and `is_primary`; the pivot model keeps one primary per counterparty by demoting the previous one. The counterparty edit page lists its contacts with role and primary flag. |
 | `Lead` | `crm_leads` | `counterparty_id` nullable. |
 | `Opportunity` | `crm_opportunities` | `counterparty_id` required, `restrictOnDelete`; no company. |
 | `OpportunityStage`, `Entity`, `Preset`, `Pivot\Presettable`, `Casts\EntityType` | Core `taxonomies`, `core_entities`, `core_presets`, `core_presettables` | The per-module taxonomy pattern also used by Shop. |
@@ -39,4 +39,4 @@ Commercial relationship module of Laraplate: counterparties, contacts, leads and
 
 ## Not in this module yet
 
-Quote and product catalogue for a CRM used without the ERP (the `Quotation` stays in the ERP, decision D14), lead versus opportunity merge, contact role per counterparty, first and last name for persons, group totals over the hierarchy, intercompany sales, printing through Core templates.
+Quote and product catalogue for a CRM used without the ERP (the `Quotation` stays in the ERP, decision D14), lead versus opportunity merge, group totals over the hierarchy, automatic twin documents and consolidation eliminations for intercompany sales (a party of another company of the group is recognised, see decision D29), printing through Core templates.

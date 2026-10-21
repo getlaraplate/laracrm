@@ -6,6 +6,7 @@ namespace Modules\CRM\Filament\Resources\Counterparties\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Modules\Core\Filament\Utils\HasForm;
 use Modules\CRM\Casts\CounterpartyKind;
@@ -24,13 +25,26 @@ final class CounterpartyForm
 
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
                 Select::make('kind')
                     ->options($kind_options)
                     ->default(CounterpartyKind::Company->value)
+                    ->live()
                     ->required(),
+                TextInput::make('first_name')
+                    ->maxLength(128)
+                    ->live(onBlur: true)
+                    ->visible(static fn (Get $get): bool => CounterpartyKind::Person->value === $get('kind')),
+                TextInput::make('last_name')
+                    ->maxLength(128)
+                    ->live(onBlur: true)
+                    ->visible(static fn (Get $get): bool => CounterpartyKind::Person->value === $get('kind')),
+                TextInput::make('name')
+                    ->required(static fn (Get $get): bool => CounterpartyKind::Person->value !== $get('kind')
+                        || (blank($get('first_name')) && blank($get('last_name'))))
+                    ->helperText(static fn (Get $get): ?string => CounterpartyKind::Person->value === $get('kind')
+                        ? __('crm.help.personNameDerived')
+                        : null)
+                    ->maxLength(255),
                 Select::make('parent_counterparty_id')
                     ->relationship('parent', 'name')
                     ->searchable()

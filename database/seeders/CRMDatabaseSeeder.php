@@ -12,12 +12,20 @@ use Modules\CRM\Models\Entity;
 use Modules\CRM\Models\Preset;
 
 /**
- * Bootstraps the CRM module: the opportunity stage entity and its default preset. The stage tree
- * itself is seeded by the dev fixtures.
+ * Bootstraps the CRM module: the opportunity stage and contact role entities and their default
+ * presets. The stage tree itself is seeded by the dev fixtures.
  */
 final class CRMDatabaseSeeder extends Seeder
 {
-    private const string STAGE_ENTITY = 'opportunity_stage';
+    /**
+     * Taxonomy entities owned by the CRM, by entity name.
+     *
+     * @var array<string, EntityType>
+     */
+    private const array ENTITIES = [
+        'opportunity_stage' => EntityType::OpportunityStages,
+        'contact_role' => EntityType::ContactRoles,
+    ];
 
     private const string DEFAULT_PRESET = 'standard';
 
@@ -35,24 +43,23 @@ final class CRMDatabaseSeeder extends Seeder
         $entity_model = new Entity;
 
         $entity_model->getConnection()->transaction(function () use ($entity_model): void {
-            if ($entity_model->newQuery()->withoutGlobalScopes()->where('name', self::STAGE_ENTITY)->exists()) {
-                $this->command?->line('    - ' . self::STAGE_ENTITY . ' already exists');
+            foreach (self::ENTITIES as $name => $type) {
+                if ($entity_model->newQuery()->withoutGlobalScopes()->where('name', $name)->exists()) {
+                    $this->command?->line('    - ' . $name . ' already exists');
 
-                return;
+                    continue;
+                }
+
+                /** @var Entity $entity */
+                $entity = $this->create(Entity::class, ['name' => $name, 'type' => $type]);
+
+                /** @var Preset $preset */
+                $preset = $this->create(Preset::class, ['name' => self::DEFAULT_PRESET, 'entity_id' => $entity->id]);
+
+                resolve(PresetVersioningService::class)->createVersion($preset);
+
+                $this->command?->line('    - ' . $name . ' <fg=green>created</>');
             }
-
-            /** @var Entity $entity */
-            $entity = $this->create(Entity::class, [
-                'name' => self::STAGE_ENTITY,
-                'type' => EntityType::OpportunityStages,
-            ]);
-
-            /** @var Preset $preset */
-            $preset = $this->create(Preset::class, ['name' => self::DEFAULT_PRESET, 'entity_id' => $entity->id]);
-
-            resolve(PresetVersioningService::class)->createVersion($preset);
-
-            $this->command?->line('    - ' . self::STAGE_ENTITY . ' <fg=green>created</>');
         });
     }
 }

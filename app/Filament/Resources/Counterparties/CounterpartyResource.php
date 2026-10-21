@@ -14,6 +14,7 @@ use Modules\Core\Filament\Utils\HasTranslatedResourceLabels;
 use Modules\CRM\Filament\Resources\Counterparties\Pages\CreateCounterparty;
 use Modules\CRM\Filament\Resources\Counterparties\Pages\EditCounterparty;
 use Modules\CRM\Filament\Resources\Counterparties\Pages\ListCounterparties;
+use Modules\CRM\Filament\Resources\Counterparties\RelationManagers\ContactsRelationManager;
 use Modules\CRM\Filament\Resources\Counterparties\Schemas\CounterpartyForm;
 use Modules\CRM\Filament\Resources\Counterparties\Tables\CounterpartiesTable;
 use Modules\CRM\Models\Counterparty;
@@ -65,7 +66,7 @@ final class CounterpartyResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [ContactsRelationManager::class];
     }
 
     public static function getPages(): array

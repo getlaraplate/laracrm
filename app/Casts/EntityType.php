@@ -17,6 +17,11 @@ enum EntityType: string implements IDynamicEntityTypable
     case OpportunityStages = 'opportunity_stages';
 
     /**
+     * Roles a contact holds at a counterparty ({@see \Modules\CRM\Models\ContactRole} / `taxonomies`), for example purchasing.
+     */
+    case ContactRoles = 'contact_roles';
+
+    /**
      * Get all values as array.
      *
      * @return array<string>

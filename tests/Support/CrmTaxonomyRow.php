@@ -1,0 +1,76 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\CRM\Tests\Support;
+
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
+use Modules\Core\Models\Taxonomy;
+use Modules\Core\Models\Translations\TaxonomyTranslation;
+use Modules\CRM\Database\Seeders\CRMDatabaseSeeder;
+use Modules\CRM\Models\Entity;
+use Modules\CRM\Models\Pivot\Presettable;
+
+/**
+ * Builds a minimal taxonomy row of a CRM entity for feature tests.
+ *
+ * Does not set is_deleted or is_locked on insert; those are generated from soft-delete and lock timestamps (SQLite).
+ */
+final class CrmTaxonomyRow
+{
+    /**
+     * Runs {@see CRMDatabaseSeeder}, inserts one taxonomy and translation row of the entity, returns taxonomy id.
+     *
+     * @param  non-empty-string  $entityName  Entity name seeded by the CRM, for example `opportunity_stage`
+     * @param  class-string<Taxonomy>  $taxonomyClass
+     * @param  non-empty-string  $translationSlug  Used to build a unique taxonomies_translations.slug
+     */
+    public static function insert(string $entityName, string $taxonomyClass, string $translationSlug, string $name = 'New'): int
+    {
+        Artisan::call('db:seed', ['--class' => CRMDatabaseSeeder::class, '--no-interaction' => true]);
+
+        $entity = Entity::query()->withoutGlobalScopes()->where('name', $entityName)->firstOrFail();
+
+        $presettable = Presettable::query()->withoutGlobalScopes()
+            ->where('entity_id', $entity->id)
+            ->whereNull('deleted_at')
+            ->latest('id')
+            ->firstOrFail();
+
+        $now = now();
+
+        $stage = (new $taxonomyClass)->setConnection($entity->getConnection()->getName());
+        $translation = (new TaxonomyTranslation)->setConnection($entity->getConnection()->getName());
+        $stage_id = $stage->getConnection()->table($stage->getTable())->insertGetId([
+            'entity_id' => $entity->id,
+            'presettable_id' => $presettable->id,
+            'shared_components' => null,
+            'parent_id' => null,
+            'logo' => null,
+            'logo_full' => null,
+            'is_active' => 1,
+            'order_column' => 0,
+            'created_at' => $now,
+            'updated_at' => $now,
+            'deleted_at' => null,
+            'locked_at' => null,
+            'locked_user_id' => null,
+            'valid_from' => $now,
+            'valid_to' => null,
+        ]);
+
+        $translation->getConnection()->table($translation->getTable())->insert([
+            'taxonomy_id' => $stage_id,
+            'locale' => 'en',
+            'name' => $name,
+            'slug' => Str::slug($translationSlug),
+            'components' => json_encode([], JSON_THROW_ON_ERROR),
+            'created_at' => $now,
+            'updated_at' => $now,
+            'deleted_at' => null,
+        ]);
+
+        return $stage_id;
+    }
+}

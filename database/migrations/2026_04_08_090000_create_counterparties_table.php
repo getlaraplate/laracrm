@@ -19,7 +19,9 @@ return new class extends Migration
         $counterparties_table = CRMTables::Counterparties->value;
         Schema::create($counterparties_table, function (Blueprint $table) use ($counterparties_table): void {
             $table->id();
-            $table->string('name')->comment('Display name of the counterparty');
+            $table->string('name')->comment('Display name of the counterparty; for a person with name parts, derived as "last first"');
+            $table->string('first_name', 128)->nullable()->comment('Given name, natural persons only');
+            $table->string('last_name', 128)->nullable()->comment('Family name, natural persons only');
             $table->enum('kind', CounterpartyKind::values())->default(CounterpartyKind::Company->value)->comment('Company or natural person');
             $table->string('tax_id', 32)->nullable()->index("{$counterparties_table}_tax_id_idx");
             $table->string('vat_number', 32)->nullable()->index("{$counterparties_table}_vat_number_idx");

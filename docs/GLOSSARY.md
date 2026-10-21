@@ -10,6 +10,9 @@
 | **Organisational counterparty** | A counterparty with children and neither a VAT number nor a tax id: it groups legal entities and cannot have a party. |
 | **CounterpartyBankAccount** | A bank account of a counterparty (`beneficiary_name`, `iban`, `bic`, `currency`, `is_active`), stored once. Table `crm_counterparty_bank_accounts`. The ERP `PartyBankAccount` points to it and keeps the per-company default flag and direct debit mandate. |
 | **Contact** | A person at one or more counterparties through `crm_contactables`; may be linked to a Laraplate user. |
+| **ContactRole** | Taxonomy node (`EntityType::ContactRoles`, entity `contact_role`) naming what a contact is at one counterparty, for example purchasing. Stored as `role_taxonomy_id` on the `crm_contactables` link, so one person can hold different roles at different counterparties. |
+| **Primary contact** | `is_primary` on the `crm_contactables` link. A counterparty has at most one: making another contact primary demotes the previous one. |
+| **first_name / last_name** | Optional name parts of a counterparty of `kind` person (refused on a company). When either is filled, `name` is derived as "last first" on save, so every reader of `name` keeps working. |
 
 ## Pipeline
 
