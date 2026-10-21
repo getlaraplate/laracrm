@@ -7,8 +7,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Core\Enums\CoreTables;
 use Modules\Core\Helpers\MigrateUtils;
-use Modules\CRM\Enums\CRMTables;
 use Modules\CRM\Casts\LeadStatus;
+use Modules\CRM\Enums\CRMTables;
 
 return new class extends Migration
 {

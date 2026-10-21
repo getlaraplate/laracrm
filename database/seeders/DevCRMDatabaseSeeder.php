@@ -122,9 +122,9 @@ final class DevCRMDatabaseSeeder extends Seeder
             ['status' => LeadStatus::Qualified, 'source' => 'trade-fair'],
         );
 
-        $stage_id = OpportunityStage::query()
-            ->whereHas('translations', static fn ($query) => $query->where('slug', 'opp-proposal'))
-            ->value('id');
+        $stage_id = TaxonomyTranslation::query()
+            ->where('slug', Str::slug('opp-proposal'))
+            ->value('taxonomy_id');
 
         if ($stage_id === null) {
             $this->command?->warn('Skipping the demo opportunity: the pipeline stages are missing.');
