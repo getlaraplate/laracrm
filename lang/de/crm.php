@@ -55,6 +55,24 @@ return [
     'help' => [
         'stageTaxonomiesRequired' => 'Pipeline-Phasen benötigen Taxonomien: CRMDatabaseSeeder und dann DevCRMDatabaseSeeder ausführen.',
     ],
+    'reports' => [
+        'count' => 'Anzahl',
+        'expectedDoc' => 'Erwartet (Beleg)',
+        'expectedLocal' => 'Erwartet (Landeswährung)',
+        'lost' => 'Verloren:',
+        'lostCount' => 'Anzahl verloren:',
+        'noPipelineData' => 'Keine Pipeline-Daten für die gewählten Filter.',
+        'pipelineSummary' => 'Pipeline-Übersicht',
+        'status' => 'Status',
+        'total' => 'Summe',
+        'totalOpportunities' => 'Verkaufschancen gesamt:',
+        'totalPipeline' => 'Pipeline gesamt:',
+        'won' => 'Gewonnen:',
+        'wonValue' => 'Gewonnener Wert:',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Vertriebspipeline',
+    ],
     'navigation' => [
         'master_data' => 'CRM - Stammdaten',
         'pipeline' => 'CRM - Pipeline',

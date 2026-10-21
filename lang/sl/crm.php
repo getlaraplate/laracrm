@@ -55,6 +55,24 @@ return [
     'help' => [
         'stageTaxonomiesRequired' => 'Faze prodajnega lijaka zahtevajo taksonomije: zaženite CRMDatabaseSeeder in nato DevCRMDatabaseSeeder.',
     ],
+    'reports' => [
+        'count' => 'Število',
+        'expectedDoc' => 'Pričakovano (dokument)',
+        'expectedLocal' => 'Pričakovano (domača valuta)',
+        'lost' => 'Izgubljene:',
+        'lostCount' => 'Število izgubljenih:',
+        'noPipelineData' => 'Za izbrane filtre ni podatkov o lijaku.',
+        'pipelineSummary' => 'Povzetek lijaka',
+        'status' => 'Stanje',
+        'total' => 'Skupaj',
+        'totalOpportunities' => 'Skupaj priložnosti:',
+        'totalPipeline' => 'Skupaj lijak:',
+        'won' => 'Pridobljene:',
+        'wonValue' => 'Pridobljena vrednost:',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Prodajni lijak',
+    ],
     'navigation' => [
         'master_data' => 'CRM - Matični podatki',
         'pipeline' => 'CRM - Prodajni lijak',

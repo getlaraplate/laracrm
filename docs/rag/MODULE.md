@@ -27,7 +27,7 @@ Commercial relationship module of Laraplate: counterparties, contacts, leads and
 - `QuotationObserver`: an accepted quotation sets `is_customer` on its party and calls `OpportunityLifecycleService::markWon()`. A quotation no longer requires a customer party, and its opportunity must belong to the same counterparty as the quotation party.
 - `PartyBankAccount` (ERP) points to a `CounterpartyBankAccount` and proxies its data through `ProxiesCounterpartyBankAccount`.
 - `Party` implements Core `IMountsRelatedAttributes`: the CRUD API filters, sorts and selects the identity attributes by their plain name (`name`, `vat_number`); Core turns them into the `counterparty` relation column.
-- The ERP sales pipeline report and page read `Opportunity` and stay in the ERP (the CSV exporter is ERP-only).
+- The sales pipeline report (`SalesPipelineService`, `SalesPipelinePage` at `/admin/sales-pipeline`, `SalesPipelineCsvExporter` over Core `TabularCsvExporter`) lives in the CRM, in the pipeline navigation group, with won-date filters and a CSV export.
 
 ## Filament
 

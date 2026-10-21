@@ -1,0 +1,95 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\CRM\Filament\Pages;
+
+use BackedEnum;
+use Filament\Forms\Components\DatePicker;
+use Filament\Pages\Page;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Modules\Core\Filament\Utils\HasPageForm;
+use Modules\CRM\Services\SalesPipelineCsvExporter;
+use Modules\CRM\Services\SalesPipelineService;
+use Override;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use UnitEnum;
+
+final class SalesPipelinePage extends Page
+{
+    use HasPageForm;
+
+    public ?array $data = [];
+
+    /**
+     * @var array<string, mixed>
+     */
+    public array $report_data = [];
+
+    #[Override]
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFunnel;
+
+    #[Override]
+    protected static string|UnitEnum|null $navigationGroup = 'crm.navigation.pipeline';
+
+    #[Override]
+    protected static ?int $navigationSort = 100;
+
+    #[Override]
+    protected static ?string $slug = 'sales-pipeline';
+
+    #[Override]
+    protected string $view = 'crm::filament.pages.sales-pipeline';
+
+    #[Override]
+    public static function getNavigationLabel(): string
+    {
+        return (string) __('crm.pages.salesPipeline');
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->statePath('data')
+            ->components([
+                DatePicker::make('won_from'),
+                DatePicker::make('won_to'),
+            ]);
+    }
+
+    public function generate(): void
+    {
+        $state = $this->pageForm()->getState();
+
+        $service = resolve(SalesPipelineService::class);
+
+        $this->report_data = $service->generate([
+            'won_from' => $state['won_from'] ?? null,
+            'won_to' => $state['won_to'] ?? null,
+        ]);
+    }
+
+    public function exportCsv(): StreamedResponse
+    {
+        if ($this->report_data === []) {
+            $this->generate();
+        }
+
+        $csv = resolve(SalesPipelineCsvExporter::class)->export($this->report_data);
+
+        return response()->streamDownload(
+            static function () use ($csv): void {
+                echo $csv;
+            },
+            'sales-pipeline.csv',
+            ['Content-Type' => 'text/csv; charset=UTF-8'],
+        );
+    }
+
+    #[Override]
+    public function getTitle(): string
+    {
+        return (string) __('crm.pages.salesPipeline');
+    }
+}

@@ -55,6 +55,24 @@ return [
     'help' => [
         'stageTaxonomiesRequired' => 'Pipeline stages require taxonomies: run CRMDatabaseSeeder then DevCRMDatabaseSeeder so stages exist.',
     ],
+    'reports' => [
+        'count' => 'Count',
+        'expectedDoc' => 'Expected (document)',
+        'expectedLocal' => 'Expected (local)',
+        'lost' => 'Lost:',
+        'lostCount' => 'Lost count:',
+        'noPipelineData' => 'No pipeline data for the selected filters.',
+        'pipelineSummary' => 'Pipeline summary',
+        'status' => 'Status',
+        'total' => 'Total',
+        'totalOpportunities' => 'Total opportunities:',
+        'totalPipeline' => 'Total pipeline:',
+        'won' => 'Won:',
+        'wonValue' => 'Won value:',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Sales pipeline',
+    ],
     'navigation' => [
         'master_data' => 'CRM - Master data',
         'pipeline' => 'CRM - Pipeline',

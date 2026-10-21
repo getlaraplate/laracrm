@@ -55,6 +55,24 @@ return [
     'help' => [
         'stageTaxonomiesRequired' => 'Le fasi della pipeline richiedono le tassonomie: esegui CRMDatabaseSeeder e poi DevCRMDatabaseSeeder.',
     ],
+    'reports' => [
+        'count' => 'Numero',
+        'expectedDoc' => 'Previsto (documento)',
+        'expectedLocal' => 'Previsto (valuta locale)',
+        'lost' => 'Perse:',
+        'lostCount' => 'Numero perse:',
+        'noPipelineData' => 'Nessun dato di pipeline per i filtri selezionati.',
+        'pipelineSummary' => 'Riepilogo della pipeline',
+        'status' => 'Stato',
+        'total' => 'Totale',
+        'totalOpportunities' => 'Opportunità totali:',
+        'totalPipeline' => 'Pipeline totale:',
+        'won' => 'Vinte:',
+        'wonValue' => 'Valore vinto:',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Pipeline commerciale',
+    ],
     'navigation' => [
         'master_data' => 'CRM - Anagrafiche',
         'pipeline' => 'CRM - Pipeline',

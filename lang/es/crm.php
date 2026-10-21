@@ -55,6 +55,24 @@ return [
     'help' => [
         'stageTaxonomiesRequired' => 'Las fases del embudo requieren taxonomías: ejecuta CRMDatabaseSeeder y luego DevCRMDatabaseSeeder.',
     ],
+    'reports' => [
+        'count' => 'Cantidad',
+        'expectedDoc' => 'Previsto (documento)',
+        'expectedLocal' => 'Previsto (moneda local)',
+        'lost' => 'Perdidas:',
+        'lostCount' => 'Número de perdidas:',
+        'noPipelineData' => 'No hay datos del embudo para los filtros seleccionados.',
+        'pipelineSummary' => 'Resumen del embudo',
+        'status' => 'Estado',
+        'total' => 'Total',
+        'totalOpportunities' => 'Oportunidades totales:',
+        'totalPipeline' => 'Embudo total:',
+        'won' => 'Ganadas:',
+        'wonValue' => 'Valor ganado:',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Embudo de ventas',
+    ],
     'navigation' => [
         'master_data' => 'CRM - Datos maestros',
         'pipeline' => 'CRM - Embudo de ventas',
