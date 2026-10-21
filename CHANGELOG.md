@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-10-21
+
+### 🚀 Features
+
+- *(crm)* Contact role and primary contact, first and last name of persons
+- *(crm)* Convert a lead into an opportunity
+
 ## [1.0.0] - 2026-10-21
 
 ### 🚀 Features
