@@ -66,6 +66,13 @@ return [
     'messages' => [
         'leadConverted' => 'Potencialna stranka je pretvorjena v priložnost.',
     ],
+    'navigation' => [
+        'master_data' => 'CRM - Matični podatki',
+        'pipeline' => 'CRM - Prodajni lijak',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Prodajni lijak',
+    ],
     'reports' => [
         'count' => 'Število',
         'expectedDoc' => 'Pričakovano (dokument)',
@@ -80,12 +87,5 @@ return [
         'totalPipeline' => 'Skupaj lijak:',
         'won' => 'Pridobljene:',
         'wonValue' => 'Pridobljena vrednost:',
-    ],
-    'pages' => [
-        'salesPipeline' => 'Prodajni lijak',
-    ],
-    'navigation' => [
-        'master_data' => 'CRM - Matični podatki',
-        'pipeline' => 'CRM - Prodajni lijak',
     ],
 ];

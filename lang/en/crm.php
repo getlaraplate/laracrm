@@ -66,6 +66,13 @@ return [
     'messages' => [
         'leadConverted' => 'Lead converted to an opportunity.',
     ],
+    'navigation' => [
+        'master_data' => 'CRM - Master data',
+        'pipeline' => 'CRM - Pipeline',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Sales pipeline',
+    ],
     'reports' => [
         'count' => 'Count',
         'expectedDoc' => 'Expected (document)',
@@ -80,12 +87,5 @@ return [
         'totalPipeline' => 'Total pipeline:',
         'won' => 'Won:',
         'wonValue' => 'Won value:',
-    ],
-    'pages' => [
-        'salesPipeline' => 'Sales pipeline',
-    ],
-    'navigation' => [
-        'master_data' => 'CRM - Master data',
-        'pipeline' => 'CRM - Pipeline',
     ],
 ];

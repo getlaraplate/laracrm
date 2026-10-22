@@ -66,6 +66,13 @@ return [
     'messages' => [
         'leadConverted' => 'Lead convertido en oportunidad.',
     ],
+    'navigation' => [
+        'master_data' => 'CRM - Datos maestros',
+        'pipeline' => 'CRM - Embudo de ventas',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Embudo de ventas',
+    ],
     'reports' => [
         'count' => 'Cantidad',
         'expectedDoc' => 'Previsto (documento)',
@@ -80,12 +87,5 @@ return [
         'totalPipeline' => 'Embudo total:',
         'won' => 'Ganadas:',
         'wonValue' => 'Valor ganado:',
-    ],
-    'pages' => [
-        'salesPipeline' => 'Embudo de ventas',
-    ],
-    'navigation' => [
-        'master_data' => 'CRM - Datos maestros',
-        'pipeline' => 'CRM - Embudo de ventas',
     ],
 ];

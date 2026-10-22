@@ -66,6 +66,13 @@ return [
     'messages' => [
         'leadConverted' => 'Lead convertito in opportunità.',
     ],
+    'navigation' => [
+        'master_data' => 'CRM - Anagrafiche',
+        'pipeline' => 'CRM - Pipeline',
+    ],
+    'pages' => [
+        'salesPipeline' => 'Pipeline commerciale',
+    ],
     'reports' => [
         'count' => 'Numero',
         'expectedDoc' => 'Previsto (documento)',
@@ -80,12 +87,5 @@ return [
         'totalPipeline' => 'Pipeline totale:',
         'won' => 'Vinte:',
         'wonValue' => 'Valore vinto:',
-    ],
-    'pages' => [
-        'salesPipeline' => 'Pipeline commerciale',
-    ],
-    'navigation' => [
-        'master_data' => 'CRM - Anagrafiche',
-        'pipeline' => 'CRM - Pipeline',
     ],
 ];
