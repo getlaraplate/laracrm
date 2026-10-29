@@ -42,11 +42,11 @@ final class CRMDatabaseSeeder extends Seeder
 
         $entity_model = new Entity;
 
-        $entity_model->getConnection()->transaction(function () use ($entity_model): void {
+        $created = $entity_model->getConnection()->transaction(function () use ($entity_model): int {
+            $created = 0;
+
             foreach (self::ENTITIES as $name => $type) {
                 if ($entity_model->newQuery()->withoutGlobalScopes()->where('name', $name)->exists()) {
-                    $this->command?->line('    - ' . $name . ' already exists');
-
                     continue;
                 }
 
@@ -58,8 +58,12 @@ final class CRMDatabaseSeeder extends Seeder
 
                 resolve(PresetVersioningService::class)->createVersion($preset);
 
-                $this->command?->line('    - ' . $name . ' <fg=green>created</>');
+                $created++;
             }
+
+            return $created;
         });
+
+        $this->logOutcome($created, 0, count(self::ENTITIES) - $created);
     }
 }
