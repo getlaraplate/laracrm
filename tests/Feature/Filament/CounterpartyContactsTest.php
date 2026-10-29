@@ -40,8 +40,13 @@ it('edits the role and the primary flag of a link from the counterparty', functi
     $contact = Contact::factory()->create();
     $counterparty->contacts()->attach($contact->getKey());
 
+    // Mounted, filled and called step by step: after the mount, the toggle's and the select's state casts leave the
+    // mounted action aliased to what Livewire dehydrated, so `callTableAction()` no longer recognises it and returns
+    // without calling it. A browser request starts again from the snapshot and is not affected.
     contactsManagerFor($counterparty)
-        ->callTableAction('edit', $contact, ['role_taxonomy_id' => $role, 'is_primary' => true])
+        ->mountTableAction('edit', $contact)
+        ->fillForm(['role_taxonomy_id' => $role, 'is_primary' => true])
+        ->callMountedTableAction()
         ->assertHasNoTableActionErrors();
 
     $link = $counterparty->contacts()->first()->pivot;
