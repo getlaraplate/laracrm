@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2026-11-18
+
+### 🚀 Features
+
+- *(crm)* Add navigation and page keys for multiple languages
+
+### 🐛 Bug Fixes
+
+- *(crm)* Counterparty create and edit pages get the close-or-cancel button
+
+### 🧪 Testing
+
+- *(crm)* Call the contact link edit action step by step
+
+### ⚙️ Miscellaneous Tasks
+
+- *(seeders)* Report each seeding step with one summary line
+- Drop the license-compliance-checker repository
+- *(deps)* Require Laravel 13
+
 ## [1.1.0] - 2026-10-21
 
 ### 🚀 Features
