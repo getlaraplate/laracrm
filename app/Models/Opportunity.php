@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Core\Enums\CoreTables;
 use Modules\Core\Enums\VersionStrategy;
 use Modules\Core\Overrides\Model;
-use Modules\CRM\Enums\CRMTables;
 use Modules\CRM\Casts\OpportunityStatus;
+use Modules\CRM\Enums\CRMTables;
 use Override;
 
 /**

@@ -5,15 +5,14 @@ declare(strict_types=1);
 use Illuminate\Database\Eloquent\Collection;
 use Modules\CRM\Casts\OpportunityStatus;
 use Modules\CRM\Database\Seeders\CRMDatabaseSeeder;
+use Modules\CRM\Models\Counterparty;
 use Modules\CRM\Models\Entity;
 use Modules\CRM\Models\Opportunity;
 use Modules\CRM\Models\OpportunityStage;
 use Modules\CRM\Models\Pivot\Presettable;
-use Modules\CRM\Models\Counterparty;
 use Modules\CRM\Services\SalesPipelineService;
 use Modules\CRM\Tests\Support\OpportunityStatusDouble;
 use Modules\CRM\Tests\Support\SalesPipelineOpportunityRowDouble;
-
 
 it('streams opportunity rows for pipeline aggregation', function (): void {
     $source = file_get_contents(base_path('Modules/CRM/app/Services/SalesPipelineService.php'));

@@ -10,8 +10,8 @@ use Modules\Core\Enums\CoreTables;
 use Modules\Core\Enums\VersionStrategy;
 use Modules\Core\Models\User;
 use Modules\Core\Overrides\Model;
-use Modules\CRM\Enums\CRMTables;
 use Modules\CRM\Casts\LeadStatus;
+use Modules\CRM\Enums\CRMTables;
 use Override;
 
 /**
