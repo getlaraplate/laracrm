@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\CRM\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -65,7 +66,7 @@ final class Counterparty extends Model
             $match = self::query()
                 ->withTrashed()
                 ->where('vat_number', $vatNumber)
-                ->when($fiscalCountry !== null, static fn ($query) => $query->where('fiscal_country', $fiscalCountry))
+                ->when($fiscalCountry !== null, static fn (Builder $query): Builder => $query->where('fiscal_country', $fiscalCountry))
                 ->orderBy('id')
                 ->first();
 
