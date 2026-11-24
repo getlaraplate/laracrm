@@ -29,9 +29,9 @@ return new class extends Migration
             MigrateUtils::prefixIndex($table, 'counterparty_id');
             $table->foreignId('stage_taxonomy_id')
                 ->nullable(false)
+                ->comment('Pipeline stage; use EntityType::OpportunityStages tree')
                 ->constrained(CoreTables::Taxonomies->value, 'id', "{$opportunities_table}_stage_taxonomy_id_FK")
-                ->restrictOnDelete()
-                ->comment('Pipeline stage; use EntityType::OpportunityStages tree');
+                ->restrictOnDelete();
             MigrateUtils::prefixIndex($table, 'stage_taxonomy_id');
             $table->string('name')->comment('Opportunity title');
             $table->enum('status', array_map(

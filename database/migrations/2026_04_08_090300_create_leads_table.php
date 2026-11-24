@@ -19,15 +19,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('counterparty_id')
                 ->nullable()
+                ->comment('Linked counterparty once known (optional on cold leads)')
                 ->constrained(CRMTables::Counterparties->value, 'id', "{$leads_table}_counterparty_id_FK")
-                ->nullOnDelete()
-                ->comment('Linked counterparty once known (optional on cold leads)');
+                ->nullOnDelete();
             MigrateUtils::prefixIndex($table, 'counterparty_id');
             $table->foreignId('contact_id')
                 ->nullable()
+                ->comment('Primary contact person when known')
                 ->constrained(CRMTables::Contacts->value, 'id', "{$leads_table}_contact_id_FK")
-                ->nullOnDelete()
-                ->comment('Primary contact person when known');
+                ->nullOnDelete();
             MigrateUtils::prefixIndex($table, 'contact_id');
             $table->string('title')->comment('Short label for the lead');
             $table->string('source', 128)->nullable()->comment('e.g. web, referral, partner');

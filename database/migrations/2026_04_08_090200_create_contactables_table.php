@@ -19,24 +19,23 @@ return new class extends Migration
         $contactables_table = CRMTables::Contactables->value;
         Schema::create($contactables_table, function (Blueprint $table) use ($contactables_table): void {
             $table->foreignId('counterparty_id')
+                ->comment('The counterparty that the contact works for')
                 ->constrained(CRMTables::Counterparties->value, 'id', "{$contactables_table}_counterparty_id_FK")
-                ->nullable(false)
-                ->cascadeOnDelete()
-                ->comment('The counterparty that the contact works for');
+                ->cascadeOnDelete();
             $table->foreignId('contact_id')
+                ->comment('The contact that the contactable belongs to')
                 ->constrained(CRMTables::Contacts->value, 'id', "{$contactables_table}_contact_id_FK")
-                ->nullable(false)
-                ->cascadeOnDelete()
-                ->comment('The contact that the contactable belongs to');
+                ->cascadeOnDelete();
             $table->foreignId('role_taxonomy_id')
                 ->nullable()
+                ->comment('Role of the contact at the counterparty; use EntityType::ContactRoles tree')
                 ->constrained(CoreTables::Taxonomies->value, 'id', "{$contactables_table}_role_taxonomy_id_FK")
-                ->restrictOnDelete()
-                ->comment('Role of the contact at the counterparty; use EntityType::ContactRoles tree');
+                ->restrictOnDelete();
             MigrateUtils::prefixIndex($table, 'role_taxonomy_id');
             $table->boolean('is_primary')->default(false)->comment('The main contact of the counterparty; at most one, kept by the pivot model');
             MigrateUtils::prefixIndex($table, 'contact_id');
-            $table->primary(['counterparty_id', 'contact_id'], "{$contactables_table}_primary_idx")->comment('The primary key of the contactable relationship');
+            // The primary key of the contactable relationship.
+            $table->primary(['counterparty_id', 'contact_id'], "{$contactables_table}_primary_idx");
             MigrateUtils::timestamps($table);
         });
     }
