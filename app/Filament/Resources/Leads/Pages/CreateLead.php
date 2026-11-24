@@ -36,8 +36,12 @@ final class CreateLead extends CreateRecord
 
         unset($data['new_counterparty_name'], $data['new_counterparty_fiscal_country'], $data['new_counterparty_vat_number'], $data['new_counterparty_tax_id']);
 
-        if (blank($data['counterparty_id'] ?? null) && $typed !== []) {
-            $data['counterparty_id'] = Counterparty::attachOrCreate([...$typed, 'name' => $typed['name'] ?? ($typed['vat_number'] ?? $typed['tax_id'])])->getKey();
+        // A fiscal country alone identifies no company: a counterparty is looked up or created only from a name, a VAT
+        // number or a tax id, and the first of them names it when no name was typed.
+        $identity = $typed['name'] ?? $typed['vat_number'] ?? $typed['tax_id'] ?? null;
+
+        if (blank($data['counterparty_id'] ?? null) && $identity !== null) {
+            $data['counterparty_id'] = Counterparty::attachOrCreate([...$typed, 'name' => $identity])->getKey();
         }
 
         return $data;
