@@ -115,12 +115,12 @@ final class Counterparty extends Model
     public static function attachOrCreate(array $attributes): self
     {
         $match = self::findByFiscalIdentity(
-            isset($attributes['fiscal_country']) ? (string) $attributes['fiscal_country'] : null,
-            isset($attributes['vat_number']) ? (string) $attributes['vat_number'] : null,
-            isset($attributes['tax_id']) ? (string) $attributes['tax_id'] : null,
+            self::scalarToString($attributes['fiscal_country'] ?? null),
+            self::scalarToString($attributes['vat_number'] ?? null),
+            self::scalarToString($attributes['tax_id'] ?? null),
         );
 
-        $name = self::blankToNull(isset($attributes['name']) ? (string) $attributes['name'] : null);
+        $name = self::blankToNull(self::scalarToString($attributes['name'] ?? null));
 
         if (! $match instanceof self && $name !== null) {
             $match = self::query()->withTrashed()->whereRaw('LOWER(name) = ?', [mb_strtolower($name)])->orderBy('id')->first();
@@ -274,6 +274,14 @@ final class Counterparty extends Model
         ];
     }
 
+    /**
+     * A typed form value as a string, or null when it was not given or is not a scalar.
+     */
+    private static function scalarToString(mixed $value): ?string
+    {
+        return is_scalar($value) ? (string) $value : null;
+    }
+
     private static function blankToNull(?string $value): ?string
     {
         $value = $value === null ? null : mb_trim($value);
@@ -318,7 +326,8 @@ final class Counterparty extends Model
             }
 
             $visited[] = $cursor;
-            $cursor = (int) $this->newQuery()->withTrashed()->whereKey($cursor)->value('parent_counterparty_id');
+            $parent = $this->newQuery()->withTrashed()->whereKey($cursor)->value('parent_counterparty_id');
+            $cursor = is_numeric($parent) ? (int) $parent : 0;
         }
 
         return false;

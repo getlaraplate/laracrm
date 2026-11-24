@@ -16,14 +16,20 @@ use Override;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use UnitEnum;
 
+/**
+ * @phpstan-import-type PipelineReport from SalesPipelineService
+ */
 final class SalesPipelinePage extends Page
 {
     use HasPageForm;
 
+    /**
+     * @var array<string, mixed>|null
+     */
     public ?array $data = [];
 
     /**
-     * @var array<string, mixed>
+     * @var PipelineReport|array{}
      */
     public array $report_data = [];
 
@@ -60,23 +66,15 @@ final class SalesPipelinePage extends Page
 
     public function generate(): void
     {
-        $state = $this->pageForm()->getState();
-
-        $service = resolve(SalesPipelineService::class);
-
-        $this->report_data = $service->generate([
-            'won_from' => $state['won_from'] ?? null,
-            'won_to' => $state['won_to'] ?? null,
-        ]);
+        $this->report_data = $this->buildReport();
     }
 
     public function exportCsv(): StreamedResponse
     {
-        if ($this->report_data === []) {
-            $this->generate();
-        }
+        $report = $this->report_data !== [] ? $this->report_data : $this->buildReport();
+        $this->report_data = $report;
 
-        $csv = resolve(SalesPipelineCsvExporter::class)->export($this->report_data);
+        $csv = resolve(SalesPipelineCsvExporter::class)->export($report);
 
         return response()->streamDownload(
             static function () use ($csv): void {
@@ -91,5 +89,20 @@ final class SalesPipelinePage extends Page
     public function getTitle(): string
     {
         return (string) __('crm.pages.salesPipeline');
+    }
+
+    /**
+     * @return PipelineReport
+     */
+    private function buildReport(): array
+    {
+        $state = $this->pageForm()->getState();
+        $won_from = $state['won_from'] ?? null;
+        $won_to = $state['won_to'] ?? null;
+
+        return resolve(SalesPipelineService::class)->generate([
+            'won_from' => is_string($won_from) ? $won_from : null,
+            'won_to' => is_string($won_to) ? $won_to : null,
+        ]);
     }
 }

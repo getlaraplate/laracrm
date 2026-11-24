@@ -31,7 +31,7 @@ final class EditContact extends EditRecord
     #[Override]
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        $counterparty_ids = $data['counterparty_ids'] ?? [];
+        $counterparty_ids = is_array($data['counterparty_ids'] ?? null) ? $data['counterparty_ids'] : [];
         unset($data['counterparty_ids']);
 
         /** @var Contact $record */

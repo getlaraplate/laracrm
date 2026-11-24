@@ -7,20 +7,31 @@ namespace Modules\CRM\Services;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use Closure;
-use Illuminate\Support\Enumerable;
 use Modules\CRM\Casts\OpportunityStatus;
 use Modules\CRM\Models\Opportunity;
 
 /**
  * Generates operational sales pipeline summaries from CRM opportunities.
+ *
+ * @phpstan-type PipelineReport array{
+ *     by_status: array<string, array{status: string, count: int, expected_value_doc: string, expected_value_local: string}>,
+ *     total_count: int,
+ *     won_count: int,
+ *     lost_count: int,
+ *     won_value_doc: string,
+ *     won_value_local: string,
+ *     total_expected_value_doc: string,
+ *     total_expected_value_local: string,
+ * }
+ * @phpstan-type PipelineRow object{status: object{value: string}, expected_value_doc: string|null, expected_value_local: string|null, won_at: CarbonInterface|null, lost_at: CarbonInterface|null}
  */
 final class SalesPipelineService
 {
     /**
-     * @param  (Closure(): Enumerable<int, object>)|null  $opportunityProvider
-     *                                                                          Where the opportunities come from. Null means the database, which is the
-     *                                                                          only caller in production. A test passes its own rows instead of reaching
-     *                                                                          for a seam: the class stays final and its internals stay private.
+     * @param  (Closure(): iterable<int, PipelineRow>)|null  $opportunityProvider
+     *                                                                             Where the opportunities come from. Null means the database, which is the
+     *                                                                             only caller in production. A test passes its own rows instead of reaching
+     *                                                                             for a seam: the class stays final and its internals stay private.
      */
     public function __construct(
         private readonly ?Closure $opportunityProvider = null,
@@ -28,16 +39,7 @@ final class SalesPipelineService
 
     /**
      * @param  array{won_from?: string|null, won_to?: string|null}  $filters
-     * @return array{
-     *     by_status: array<string, array{status: string, count: int, expected_value_doc: string, expected_value_local: string}>,
-     *     total_count: int,
-     *     won_count: int,
-     *     lost_count: int,
-     *     won_value_doc: string,
-     *     won_value_local: string,
-     *     total_expected_value_doc: string,
-     *     total_expected_value_local: string,
-     * }
+     * @return PipelineReport
      */
     public function generate(array $filters = []): array
     {
@@ -103,9 +105,9 @@ final class SalesPipelineService
     }
 
     /**
-     * @return Enumerable<int, Opportunity|object>
+     * @return iterable<int, PipelineRow>
      */
-    private function loadOpportunities(): Enumerable
+    private function loadOpportunities(): iterable
     {
         if ($this->opportunityProvider instanceof Closure) {
             return ($this->opportunityProvider)();

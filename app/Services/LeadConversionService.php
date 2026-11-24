@@ -39,7 +39,7 @@ final class LeadConversionService
             ]);
         }
 
-        $counterparty_id = $lead->counterparty_id ?? $counterparty?->getKey();
+        $counterparty_id = $lead->counterparty_id ?? $counterparty?->id;
 
         if ($counterparty_id === null) {
             throw ValidationException::withMessages([
