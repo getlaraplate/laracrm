@@ -14,6 +14,18 @@ use Override;
  * A bank account of a counterparty: the IBAN belongs to the subject, so it is stored once however many
  * companies of the group deal with it. What differs per company (the default choice, the direct debit
  * mandate) lives on the ERP `PartyBankAccount` that points here.
+ *
+ * @property int $id
+ * @property int $counterparty_id
+ * @property string $beneficiary_name
+ * @property string $iban
+ * @property string|null $bic
+ * @property string $currency
+ * @property bool $is_active
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
+ * @property \Carbon\CarbonImmutable|null $deleted_at
+ * @property bool|null $is_deleted Whether the entity is deleted
  */
 final class CounterpartyBankAccount extends Model implements IsPartOfParent
 {

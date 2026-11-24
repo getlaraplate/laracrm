@@ -18,7 +18,7 @@ final class ContactFactory extends Factory
     protected $model = Contact::class;
 
     /**
-     * @return array<string, mixed>
+     * @return array<model-property<Contact>, mixed>
      */
     public function definition(): array
     {

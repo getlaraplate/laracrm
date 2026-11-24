@@ -19,7 +19,7 @@ final class CounterpartyFactory extends Factory
     protected $model = Counterparty::class;
 
     /**
-     * @return array<string, mixed>
+     * @return array<model-property<Counterparty>, mixed>
      */
     public function definition(): array
     {

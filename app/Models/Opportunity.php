@@ -14,6 +14,27 @@ use Override;
 
 /**
  * CRM opportunity: a qualified deal with a {@see Counterparty} on a pipeline {@see OpportunityStage}.
+ *
+ * @property int $id
+ * @property int|null $lead_id
+ * @property int $counterparty_id
+ * @property int $stage_taxonomy_id
+ * @property string $name Opportunity title
+ * @property OpportunityStatus $status
+ * @property \Carbon\CarbonImmutable|null $expected_close_date
+ * @property numeric-string|null $expected_value_doc Weighted expected value in document currency
+ * @property string $expected_currency_doc
+ * @property numeric-string|null $expected_value_local Expected value in the local (functional) currency
+ * @property string $expected_currency_local
+ * @property numeric-string $expected_fx_rate
+ * @property int|null $probability Win probability 0–100
+ * @property \Carbon\CarbonImmutable|null $won_at
+ * @property \Carbon\CarbonImmutable|null $lost_at
+ * @property string|null $lost_reason
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
+ * @property \Carbon\CarbonImmutable|null $deleted_at
+ * @property bool|null $is_deleted Whether the entity is deleted
  */
 final class Opportunity extends Model
 {
