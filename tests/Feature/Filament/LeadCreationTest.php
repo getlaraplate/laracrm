@@ -38,6 +38,17 @@ it('creates the counterparty of a new lead when nothing matches', function (): v
         ->and(Lead::query()->firstOrFail()->counterparty->name)->toBe('Fresh Prospect S.r.l.');
 });
 
+it('creates the lead without a counterparty when only a fiscal country was typed', function (): void {
+    // A country alone identifies no company: nothing to attach to, and nothing to create.
+    Livewire::test(CreateLead::class)
+        ->fillForm(['title' => 'Country only', 'status' => 'new', 'new_counterparty_fiscal_country' => 'IT'])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    expect(Lead::query()->firstOrFail()->counterparty_id)->toBeNull()
+        ->and(Counterparty::query()->count())->toBe(0);
+});
+
 it('edits a lead whose counterparty is in the trash', function (): void {
     HttpContext::panelActorWithoutApproval(new Lead, ['select', 'insert', 'update', 'delete']);
     $counterparty = Counterparty::factory()->create(['name' => 'Gone S.r.l.']);
