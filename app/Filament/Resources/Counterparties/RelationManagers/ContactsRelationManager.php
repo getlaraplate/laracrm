@@ -62,7 +62,7 @@ final class ContactsRelationManager extends RelationManager
         return [
             Select::make('role_taxonomy_id')
                 ->label(__('crm.fields.role_taxonomy_id'))
-                ->options(static fn (): array => ContactRole::query()->get()->mapWithKeys(static fn (ContactRole $role): array => [(int) $role->getKey() => (string) $role->name])->all())
+                ->options(static fn (): array => ContactRole::query()->get()->mapWithKeys(static fn (ContactRole $role): array => [$role->id => (string) $role->name])->all())
                 ->searchable()
                 ->nullable(),
             Toggle::make('is_primary')

@@ -42,7 +42,7 @@ final class CounterpartyForm
                     ->required(static fn (Get $get): bool => CounterpartyKind::Person->value !== $get('kind')
                         || (blank($get('first_name')) && blank($get('last_name'))))
                     ->helperText(static fn (Get $get): ?string => CounterpartyKind::Person->value === $get('kind')
-                        ? __('crm.help.personNameDerived')
+                        ? (string) __('crm.help.personNameDerived')
                         : null)
                     ->maxLength(255),
                 Select::make('parent_counterparty_id')

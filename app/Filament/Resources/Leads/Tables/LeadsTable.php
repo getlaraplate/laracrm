@@ -59,7 +59,7 @@ final class LeadsTable
                     ->label(__('crm.fields.stage_taxonomy_id'))
                     ->options(static fn (): array => OpportunityStage::query()
                         ->get()
-                        ->mapWithKeys(static fn (OpportunityStage $stage): array => [(int) $stage->getKey() => (string) $stage->name])
+                        ->mapWithKeys(static fn (OpportunityStage $stage): array => [$stage->id => (string) $stage->name])
                         ->all())
                     ->searchable()
                     ->required(),
@@ -75,7 +75,8 @@ final class LeadsTable
                     ->visible($record->counterparty_id === null),
             ])
             ->action(static function (Lead $record, array $data): void {
-                $counterparty = isset($data['counterparty_id']) ? Counterparty::query()->find($data['counterparty_id']) : null;
+                $counterparty_id = $data['counterparty_id'] ?? null;
+                $counterparty = is_numeric($counterparty_id) ? Counterparty::query()->find((int) $counterparty_id) : null;
 
                 resolve(LeadConversionService::class)->convert($record, (int) $data['stage_taxonomy_id'], $data['name'] ?? null, $counterparty);
 

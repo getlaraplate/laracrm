@@ -41,7 +41,7 @@ final class OpportunityForm
                 Select::make('stage_taxonomy_id')
                     ->options(static fn (): array => OpportunityStage::query()
                         ->get()
-                        ->mapWithKeys(static fn (OpportunityStage $stage): array => [(int) $stage->getKey() => (string) $stage->name])
+                        ->mapWithKeys(static fn (OpportunityStage $stage): array => [$stage->id => (string) $stage->name])
                         ->all())
                     ->searchable()
                     ->required()
