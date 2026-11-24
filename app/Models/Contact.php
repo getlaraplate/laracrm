@@ -16,6 +16,17 @@ use Modules\CRM\Enums\CRMTables;
 use Modules\CRM\Models\Pivot\Contactable;
 use Override;
 
+/**
+ * @property int $id
+ * @property int|null $user_id The user that the contact belongs to
+ * @property string $name The name of the contact
+ * @property string|null $email The email of the contact
+ * @property string|null $phone The phone of the contact
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
+ * @property \Carbon\CarbonImmutable|null $deleted_at
+ * @property bool|null $is_deleted Whether the entity is deleted
+ */
 final class Contact extends Model
 {
     /**

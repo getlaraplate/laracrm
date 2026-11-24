@@ -21,6 +21,29 @@ use Override;
  * The subject of every commercial relationship: a company or a natural person, shared by all the
  * companies of the installation. Legal identity lives here; the relationship with one company of
  * the group (flags, price lists, bank mandates) lives on the ERP `Party`.
+ *
+ * @property int $id
+ * @property string $name Display name of the counterparty; for a person with name parts, derived as "last first"
+ * @property string|null $first_name Given name, natural persons only
+ * @property string|null $last_name Family name, natural persons only
+ * @property CounterpartyKind $kind Company or natural person
+ * @property string|null $tax_id
+ * @property string|null $vat_number
+ * @property string|null $fiscal_country
+ * @property string|null $address_line
+ * @property string|null $postal_code
+ * @property string|null $city
+ * @property string|null $province
+ * @property string|null $country
+ * @property string|null $einvoice_recipient_code
+ * @property string|null $einvoice_pec_email
+ * @property bool $is_customer Aggregate written by the ERP: at least one party is a customer
+ * @property bool $is_supplier Aggregate written by the ERP: at least one party is a supplier
+ * @property int|null $parent_counterparty_id
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
+ * @property \Carbon\CarbonImmutable|null $deleted_at
+ * @property bool|null $is_deleted Whether the entity is deleted
  */
 final class Counterparty extends Model
 {

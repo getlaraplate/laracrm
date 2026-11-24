@@ -14,6 +14,13 @@ use Override;
  * Pivot linking CRM counterparties and contacts, with the role the contact holds there and whether
  * it is the main contact. A counterparty has at most one main contact: making another one primary
  * demotes the previous.
+ *
+ * @property int $counterparty_id
+ * @property int $contact_id
+ * @property int|null $role_taxonomy_id
+ * @property bool $is_primary The main contact of the counterparty; at most one, kept by the pivot model
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
  */
 final class Contactable extends Pivot
 {

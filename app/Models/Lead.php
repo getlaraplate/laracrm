@@ -16,6 +16,20 @@ use Override;
 
 /**
  * CRM lead: an early-stage commercial approach to a {@see Counterparty}, before a formal {@see Opportunity}.
+ *
+ * @property int $id
+ * @property int|null $counterparty_id
+ * @property int|null $contact_id
+ * @property string $title Short label for the lead
+ * @property string|null $source e.g. web, referral, partner
+ * @property LeadStatus $status
+ * @property int|null $owner_user_id
+ * @property string|null $notes
+ * @property \Carbon\CarbonImmutable|null $converted_at When the lead moved to an opportunity or party flow
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
+ * @property \Carbon\CarbonImmutable|null $deleted_at
+ * @property bool|null $is_deleted Whether the entity is deleted
  */
 final class Lead extends Model
 {
