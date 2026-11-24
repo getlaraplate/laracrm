@@ -37,9 +37,9 @@ return new class extends Migration
             $table->boolean('is_supplier')->default(false)->comment('Aggregate written by the ERP: at least one party is a supplier');
             $table->foreignId('parent_counterparty_id')
                 ->nullable()
+                ->comment('Optional group hierarchy')
                 ->constrained($counterparties_table, 'id', "{$counterparties_table}_parent_counterparty_id_FK")
-                ->nullOnDelete()
-                ->comment('Optional group hierarchy');
+                ->nullOnDelete();
             MigrateUtils::prefixIndex($table, 'parent_counterparty_id');
 
             MigrateUtils::timestamps(
