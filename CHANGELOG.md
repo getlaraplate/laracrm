@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - 2026-11-25
+
+### 🐛 Bug Fixes
+
+- *(crm)* A fiscal country typed alone no longer breaks lead creation
+- *(migrations)* Put column comments on the columns, not the foreign keys
+- *(phpstan)* Clear CRM's backlog
+
+### 📚 Documentation
+
+- *(models)* Every model declares its columns as @property tags
+- *(models)* Declare translated and proxied attributes, and type factory keys
+
+### 🎨 Styling
+
+- *(crm)* Declare the types pest type-coverage was missing
+- Style(crm): reorder use statements for consistency in Lead and Opportunity models
+style(tests): clean up use statements in SalesPipelineServiceTest
+
 ## [1.1.1] - 2026-11-18
 
 ### 🚀 Features
